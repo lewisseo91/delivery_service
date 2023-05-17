@@ -15,7 +15,15 @@ class UserServiceTest {
     @DisplayName("회원가입을 할 수 있다")
     @Test
     public void signUpUserTest() {
+        String userId = "user_1@email.com";
+        String pw = "abcd123!@dsaf56";
+        String userName = "유저1";
+        User user = new User(userId, pw, userName);
+        User registeredUser = userService.signUp(user);
 
+        assertEquals(registeredUser.getUserId(), userId);
+        assertEquals(registeredUser.getPassWord(), pw);
+        assertEquals(registeredUser.getUserName(), userName);
     }
 
     @DisplayName("회원가입은 대문자, 소문자, 숫자, 특수문자 중 3종류 이상을 만족한다.")
