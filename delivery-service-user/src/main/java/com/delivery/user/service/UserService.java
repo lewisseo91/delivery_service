@@ -23,4 +23,7 @@ public class UserService {
     private User addUser(User user) {
         return userRepository.save(user);
     }
+
+    public void login(UserLoginRequest userLoginRequest) {
+    }
 }
