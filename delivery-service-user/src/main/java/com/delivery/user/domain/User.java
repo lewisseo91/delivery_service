@@ -2,6 +2,7 @@ package com.delivery.user.domain;
 
 import jakarta.persistence.*;
 import lombok.NoArgsConstructor;
+import java.util.Set;
 
 @Entity
 @NoArgsConstructor
@@ -18,11 +19,24 @@ public class User {
 
     @Column(name = "user_name")
     private String userName;
+
+    @OneToMany(fetch = FetchType.EAGER)
+    @JoinColumn(name = "authority_id")
+    private Set<Authority> authorities;
+
     public User(Long id, String userId, String password, String userName) {
         this.id = id;
         this.userId = userId;
         this.password = password;
         this.userName = userName;
+    }
+
+    public User(Long id, String userId, String password, String userName, Set<Authority> authorities) {
+        this.id = id;
+        this.userId = userId;
+        this.password = password;
+        this.userName = userName;
+        this.authorities = authorities;
     }
 
     public String getUserId() {
@@ -35,5 +49,9 @@ public class User {
 
     public String getUserName() {
         return userName;
+    }
+
+    public Set<Authority> getAuthorities() {
+        return authorities;
     }
 }
