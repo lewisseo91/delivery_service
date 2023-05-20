@@ -5,23 +5,28 @@ import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 
 @Entity
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Authority {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "authority_id")
     private Long authorityId;
 
-    @Column(name = "user_id")
-    private Long userId;
-
     @Column(name = "authority_name")
-    private String authorityName;
+    @Enumerated(value = EnumType.STRING)
+    private AuthorityRole authorityRole;
 
-    public Authority(String authorityName) {
-        this.authorityName = authorityName;
+    public Authority() {
     }
 
-    public String getAuthorityName() {
-        return authorityName;
+    public Authority(AuthorityRole authorityRole) {
+        this.authorityRole = authorityRole;
+    }
+
+    public Long getAuthorityId() {
+        return authorityId;
+    }
+
+    public AuthorityRole getAuthorityRole() {
+        return authorityRole;
     }
 }

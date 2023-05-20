@@ -21,7 +21,7 @@ public class User {
     private String userName;
 
     @OneToMany(fetch = FetchType.EAGER)
-    @JoinColumn(name = "user_id")
+    @JoinColumn(name = "authority_id")
     private Set<Authority> authorities;
 
     public User(Long id, String userId, String password, String userName) {

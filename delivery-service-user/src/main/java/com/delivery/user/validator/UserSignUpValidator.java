@@ -1,6 +1,7 @@
 package com.delivery.user.validator;
 
 import com.delivery.user.domain.User;
+import com.delivery.user.dto.UserSignUpRequest;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -27,14 +28,14 @@ public class UserSignUpValidator {
             ANY_NUMBER_REGEX,
             ANY_SPECIAL_CHARACTER_REGEX);
 
-    public static void validate(User user) {
-        validateExistPassword(user);
-        validatePasswordLength(user.getPassword());
-        validatePasswordPattern(user.getPassword());
+    public static void validate(UserSignUpRequest userSignUpRequest) {
+        validateExistPassword(userSignUpRequest);
+        validatePasswordLength(userSignUpRequest.getPassword());
+        validatePasswordPattern(userSignUpRequest.getPassword());
     }
 
-    private static void validateExistPassword(User user) {
-        if (Objects.isNull(user.getPassword())) {
+    private static void validateExistPassword(UserSignUpRequest userSignUpRequest) {
+        if (Objects.isNull(userSignUpRequest.getPassword())) {
             throw new RuntimeException();
         }
     }
