@@ -12,7 +12,7 @@ spring:
 
 jwt:
   header: Authorization
-  secret: bGV3aXMxMjMyMTNmZHNrbGpmYXNka2wxMjMzMTIyMTMyMTM5MDg= # lewis123213fdskljfasdkl123312213213908
+  secret: ZGVmYXVsdCBrZXkgZm9yIHRlc3QgbGV3aXMgc2VvIDIwMjMgMDUgMjAgZGZzbGFrZmRzYWxramZkc2Fsa2pmZHNhbGtmanM= # default key for test lewis seo 2023 05 20 dfslakfdsalkjfdsalkjfdsalkfjs
   access-token-validity-in-seconds: 600 # 10 min
 
 server:
