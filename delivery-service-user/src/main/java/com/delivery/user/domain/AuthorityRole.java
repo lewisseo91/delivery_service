@@ -4,10 +4,20 @@ import org.h2.util.StringUtils;
 
 import java.util.Arrays;
 
+import static com.delivery.user.domain.AuthorityRole.RoleName.USER;
+import static com.delivery.user.domain.AuthorityRole.RoleName.ADMIN;
+import static com.delivery.user.domain.AuthorityRole.RoleName.RIDER;
+
 public enum AuthorityRole {
-    ROLE_USER("ROLE_USER"),
-    ROLE_ADMIN("ROLE_ADMIN"),
-    ROLE_RIDER("ROLE_RIDER");
+    ROLE_USER(USER),
+    ROLE_ADMIN(ADMIN),
+    ROLE_RIDER(RIDER);
+
+    public static class RoleName {
+        public static final String USER = "ROLE_USER";
+        public static final String ADMIN = "ROLE_ADMIN";
+        public static final String RIDER = "ROLE_RIDER";
+    }
 
     private final String roleName;
 
@@ -24,5 +34,9 @@ public enum AuthorityRole {
                 .filter(authorityRole -> authorityRole.roleName.equals(roleName))
                 .findFirst()
                 .orElseThrow(() -> new RuntimeException("role name is wrong"));
+    }
+
+    public String getRoleName() {
+        return roleName;
     }
 }

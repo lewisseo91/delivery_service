@@ -40,7 +40,7 @@ public class UserService {
         userAuthorizationValidator.validatePassword(userSignUpRequest);
         userAuthorizationValidator.validateNonExistUser(checkUser);
 
-        List<Authority> authorities = authorityService.findAllAuthoritiesByAuthorityName(userSignUpRequest.convertFromRoleNameToAuthorityRole());
+        List<Authority> authorities = authorityService.saveAllAuthorities(userSignUpRequest.convertFromRoleNameToAuthorityRole());
 
         User user = new User(userSignUpRequest.getId(),
                 userSignUpRequest.getUserId(),
@@ -48,7 +48,10 @@ public class UserService {
                 userSignUpRequest.getUserName(),
                 new HashSet<>(authorities));
 
-        return UserSignUpResponse.of(addUser(user));
+        user.grantAuthorities(authorities);
+        User savedUser = addUser(user);
+
+        return UserSignUpResponse.of(savedUser);
     }
 
     @Transactional(readOnly = true)
@@ -57,7 +60,7 @@ public class UserService {
 
         userAuthorizationValidator.validateLogin(user, userLoginRequest.getPassword());
 
-        Authentication authentication = userAuthService.getAuthentication(userLoginRequest);
+        Authentication authentication = userAuthService.getAuthenticationWithAuthorities(userLoginRequest, user.getAuthorityNames());
         String accessToken = jwtTokenProvider.createToken(authentication);
 
         return new UserLoginResponse(accessToken);
@@ -67,7 +70,8 @@ public class UserService {
         return passwordEncoder.encode(password);
     }
 
-    private User findUserByUserId(String userId) {
+    @Transactional(readOnly = true)
+    public User findUserByUserId(String userId) {
         return userRepository.findOneByUserId(userId);
     }
 

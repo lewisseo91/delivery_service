@@ -29,7 +29,6 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
@@ -85,7 +84,7 @@ class UserServiceTest {
 
         Authentication mockedUser = mockAuthentication(userId, pw, List.of("ROLE_USER"));
         UserLoginRequest userLoginRequest = new UserLoginRequest(userId, pw);
-        when(userAuthService.getAuthentication(any())).thenReturn(mockedUser);
+        when(userAuthService.getAuthenticationWithAuthorities(any(), any())).thenReturn(mockedUser);
 
         // when
         UserLoginResponse userLoginResponse = userService.login(userLoginRequest);

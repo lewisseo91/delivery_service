@@ -5,10 +5,15 @@ spring:
     password: password
     driverClassName: org.h2.Driver
   jpa:
-    spring.jpa.database-platform: org.hibernate.dialect.H2Dialect
+    show-sql: true
+    database-platform: org.hibernate.dialect.H2Dialect
+    defer-datasource-initialization: true
     properties:
       hibernate:
         globally_quoted_identifiers: true
+  h2:
+    console:
+      enabled: true
 
 jwt:
   header: Authorization

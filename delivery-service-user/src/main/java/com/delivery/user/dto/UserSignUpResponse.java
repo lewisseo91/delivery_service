@@ -29,7 +29,7 @@ public class UserSignUpResponse {
                 user.getId(),
                 user.getUserId(),
                 user.getUserName(),
-                user.getAuthorityNames());
+                user.getAuthorityRoles());
     }
 
     public Long getId() {
