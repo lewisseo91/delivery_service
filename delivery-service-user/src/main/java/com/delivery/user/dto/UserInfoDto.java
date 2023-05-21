@@ -13,6 +13,8 @@ public class UserInfoDto {
 
     private String userName;
 
+    private String password;
+
     private Set<AuthorityRole> authorityRoles;
 
     private Set<String> authorityNames;
@@ -20,16 +22,17 @@ public class UserInfoDto {
     public UserInfoDto() {
     }
 
-    public UserInfoDto(Long id, String userId, String userName, Set<AuthorityRole> authorityRoles) {
+    public UserInfoDto(Long id, String userId, String password, String userName, Set<AuthorityRole> authorityRoles) {
         this.id = id;
         this.userId = userId;
+        this.password = password;
         this.userName = userName;
         this.authorityRoles = authorityRoles;
         this.authorityNames = authorityRoles.stream().map(AuthorityRole::getRoleName).collect(Collectors.toSet());
     }
 
     public static UserInfoDto of(User user) {
-        return new UserInfoDto(user.getId(), user.getUserId(), user.getUserName(), user.getAuthorityRoles());
+        return new UserInfoDto(user.getId(), user.getUserId(), user.getPassword(), user.getUserName(), user.getAuthorityRoles());
     }
 
     public Long getId() {
@@ -50,5 +53,9 @@ public class UserInfoDto {
 
     public Set<String> getAuthorityNames() {
         return authorityNames;
+    }
+
+    public String getPassword() {
+        return password;
     }
 }
