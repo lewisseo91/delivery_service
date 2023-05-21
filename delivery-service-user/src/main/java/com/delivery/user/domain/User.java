@@ -2,7 +2,11 @@ package com.delivery.user.domain;
 
 import jakarta.persistence.*;
 import lombok.NoArgsConstructor;
+
+import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 @Entity
 @NoArgsConstructor
@@ -20,8 +24,7 @@ public class User {
     @Column(name = "user_name")
     private String userName;
 
-    @OneToMany(fetch = FetchType.EAGER)
-    @JoinColumn(name = "authority_id")
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "user")
     private Set<Authority> authorities;
 
     public User(Long id, String userId, String password, String userName) {
@@ -29,6 +32,7 @@ public class User {
         this.userId = userId;
         this.password = password;
         this.userName = userName;
+        this.authorities = new HashSet<>();
     }
 
     public User(Long id, String userId, String password, String userName, Set<Authority> authorities) {
@@ -37,6 +41,10 @@ public class User {
         this.password = password;
         this.userName = userName;
         this.authorities = authorities;
+    }
+
+    public Long getId() {
+        return id;
     }
 
     public String getUserId() {
@@ -53,5 +61,24 @@ public class User {
 
     public Set<Authority> getAuthorities() {
         return authorities;
+    }
+
+    public Set<AuthorityRole> getAuthorityRoles() {
+        return authorities.stream()
+                .map(Authority::getAuthorityRole)
+                .collect(Collectors.toSet());
+    }
+
+    public Set<String> getAuthorityNames() {
+        return authorities.stream()
+                .map(Authority::getAuthorityRole)
+                .map(AuthorityRole::getRoleName)
+                .collect(Collectors.toSet());
+    }
+
+    public void grantAuthorities(List<Authority> authorities) {
+        this.getAuthorities().addAll(authorities);
+
+        this.authorities.stream().forEach(authority -> authority.updateUser(this));
     }
 }

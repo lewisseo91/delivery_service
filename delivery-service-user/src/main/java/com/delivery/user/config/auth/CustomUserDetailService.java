@@ -28,7 +28,7 @@ public class CustomUserDetailService implements UserDetailsService {
                 .orElseThrow(() -> new UsernameNotFoundException("Not found any userId"));
 
         List<SimpleGrantedAuthority> authorities = user.getAuthorities().stream()
-                .map(authority -> new SimpleGrantedAuthority(authority.getAuthorityRole().name()))
+                .map(authority -> new SimpleGrantedAuthority(authority.getAuthorityRole().getRoleName()))
                 .collect(Collectors.toList());
 
         return new org.springframework.security.core.userdetails.User(user.getUserId(), user.getPassword(), authorities);

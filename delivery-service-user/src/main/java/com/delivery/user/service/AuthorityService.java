@@ -8,13 +8,15 @@ import org.springframework.stereotype.Component;
 
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 @Component
 @RequiredArgsConstructor
 public class AuthorityService {
     private final AuthorityRepository authorityRepository;
 
-    public List<Authority> findAllAuthoritiesByAuthorityName(Set<AuthorityRole> authorityRoles) {
-        return authorityRepository.findAllByAuthorityRoleIn(authorityRoles);
+    public List<Authority> saveAllAuthorities(Set<AuthorityRole> authorities) {
+        Set<Authority> newAuthorities = authorities.stream().map(Authority::new).collect(Collectors.toSet());
+        return authorityRepository.saveAll(newAuthorities);
     }
 }

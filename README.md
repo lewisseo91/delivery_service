@@ -23,4 +23,23 @@
 3. 예외 케이스 AMAP
 4. JWT 적용
 5. Test Case 작성
-6. API 명세서 
+6. API 명세서
+
+---
+
+# 참고사항
+
+- docker-compose.yml을 통해 test db(h2) 와 dev db(mysql)를 연동하고 있습니다.
+
+
+---
+
+# 도메인 설계 예상도
+
+![배달주문 도메인 예상도.jpg](./domain_expect_picture.jpg)
+
+---
+
+# 포스트맨 테스트
+
+- /postman 안 파일에서 postman json 파일들을 받으신 다음 import를 이용해 기능 테스트를 하실 수 있습니다.

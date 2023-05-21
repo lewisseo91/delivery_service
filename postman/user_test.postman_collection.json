@@ -1,0 +1,106 @@
+{
+	"info": {
+		"_postman_id": "8d3f3bd0-79a6-4419-9f38-6485ad7c7cc3",
+		"name": "user_test",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "login_request",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "default"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"userId\" : \"abc111\",\r\n    \"password\" : \"!dfsklajfdsafAASSDfdslka123213\"\r\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8082/user/login",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8082",
+					"path": [
+						"user",
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "signup",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "default"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"userId\" : \"abc111\",\r\n    \"password\" : \"!dfsklajfdsafAASSDfdslka123213\",\r\n    \"userName\" : \"user_111\"\r\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8082/user/signup",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8082",
+					"path": [
+						"user",
+						"signup"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "auth-test",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhYmMxMTEiLCJhdXRoIjoiUk9MRV9VU0VSIiwiZXhwIjoxNjg0NjcwMTQ3fQ.LWVCInHpd7to4TLWdhpm3659C3P-zlz9lqDqdJJW_iYfpMW1PKLQsJAkV15jAz5bUqh2ZKAcx-yV5mT0dugrzA",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "default"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:8082/user/auth/test",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8082",
+					"path": [
+						"user",
+						"auth",
+						"test"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

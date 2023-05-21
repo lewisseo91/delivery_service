@@ -11,6 +11,10 @@ public class Authority {
     @Column(name = "authority_id")
     private Long authorityId;
 
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User user;
+
     @Column(name = "authority_name")
     @Enumerated(value = EnumType.STRING)
     private AuthorityRole authorityRole;
@@ -28,5 +32,9 @@ public class Authority {
 
     public AuthorityRole getAuthorityRole() {
         return authorityRole;
+    }
+
+    public void updateUser(User user) {
+        this.user = user;
     }
 }
