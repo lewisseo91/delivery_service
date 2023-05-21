@@ -1,0 +1,190 @@
+{
+	"info": {
+		"_postman_id": "18ad00da-1a18-4358-9c78-9374a8164e2f",
+		"name": "order_test",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "order-test",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhYmMxMTEiLCJhdXRoIjoiUk9MRV9VU0VSIiwiZXhwIjoxNjg0Njg0NDA2fQ.cweKVywFVqk4XeXgssqOk_ACciGnegKtKiJzX7ftUcn2buwVdE6nHZVFfMPyP3v73cuoZSC0dnBOMLt46CdrSg",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8081/order/test",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8081",
+					"path": [
+						"order",
+						"test"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "order-add",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhYmMxMTEiLCJhdXRoIjoiUk9MRV9VU0VSIiwiZXhwIjoxNjg0Njg1MDczfQ.5UoWAMe5u5YGXff0eg96xSXg-1_eW_daliAjkJOWQIfbaOZtxcF-gIOfcgjDQwIuO6Q0lNEOk3WuW3-O2lQW_A",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "default"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"orderId\" : \"orderId\",\r\n    \"orderUserId\" : \"abc111\",\r\n    \"orderAddress\" : \"주소1\",\r\n    \"orderStoreId\" : \"storeId_1\",\r\n    \"orderMoverId\" : \"moverId_1\",\r\n    \"orderStarted\" : \"false\",\r\n    \"orderCreatedAt\" : \"2023-05-22T00:00:00\"\r\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8081/order/add",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8081",
+					"path": [
+						"order",
+						"add"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "order-search-order-id",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhYmMxMTEiLCJhdXRoIjoiUk9MRV9VU0VSIiwiZXhwIjoxNjg0Njg1MDczfQ.5UoWAMe5u5YGXff0eg96xSXg-1_eW_daliAjkJOWQIfbaOZtxcF-gIOfcgjDQwIuO6Q0lNEOk3WuW3-O2lQW_A",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8081/order/search-order-id/orderId",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8081",
+					"path": [
+						"order",
+						"search-order-id",
+						"orderId"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "order-search-date",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhYmMxMTEiLCJhdXRoIjoiUk9MRV9VU0VSIiwiZXhwIjoxNjg0Njg1MDczfQ.5UoWAMe5u5YGXff0eg96xSXg-1_eW_daliAjkJOWQIfbaOZtxcF-gIOfcgjDQwIuO6Q0lNEOk3WuW3-O2lQW_A",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "default"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"searchDate\" : \"2023-05-10T00:00:00\"\r\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8081/order/search-date",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8081",
+					"path": [
+						"order",
+						"search-date"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "order-update-address",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhYmMxMTEiLCJhdXRoIjoiUk9MRV9VU0VSIiwiZXhwIjoxNjg0Njg1MDczfQ.5UoWAMe5u5YGXff0eg96xSXg-1_eW_daliAjkJOWQIfbaOZtxcF-gIOfcgjDQwIuO6Q0lNEOk3WuW3-O2lQW_A",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "default"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"orderId\" : \"orderId\",\r\n    \"updateOrderAddress\" : \"updatedOrderAddress\"\r\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8081/order/update-address",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8081",
+					"path": [
+						"order",
+						"update-address"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
