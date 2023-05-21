@@ -7,6 +7,7 @@ import com.delivery.user.dto.UserLoginResponse;
 import com.delivery.user.dto.UserSignUpRequest;
 import com.delivery.user.dto.UserSignUpResponse;
 import com.delivery.user.repository.UserRepository;
+import com.delivery.user.validator.UserAuthorizationValidator;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -36,6 +37,7 @@ import static org.mockito.Mockito.when;
 @DataJpaTest
 @Import({JwtTokenProvider.class,
         AuthorityService.class,
+        UserAuthorizationValidator.class,
         BCryptPasswordEncoder.class})
 @ExtendWith(MockitoExtension.class)
 class UserServiceTest {
@@ -57,6 +59,9 @@ class UserServiceTest {
     @Autowired
     private AuthorityService authorityService;
 
+    @Autowired
+    private UserAuthorizationValidator userAuthorizationValidator;
+
     @BeforeEach
     public void setup() {
         this.userService = new UserService(
@@ -64,6 +69,7 @@ class UserServiceTest {
                 jwtTokenProvider,
                 userAuthService,
                 authorityService,
+                userAuthorizationValidator,
                 passwordEncoder);
     }
 
@@ -73,6 +79,10 @@ class UserServiceTest {
         // given
         String userId = "user_1@email.com";
         String pw = "abcd123!@dsaf56";
+        String userName = "유저1";
+
+        회원가입을_하다(userId, pw, userName);
+
         Authentication mockedUser = mockAuthentication(userId, pw, List.of("ROLE_USER"));
         UserLoginRequest userLoginRequest = new UserLoginRequest(userId, pw);
         when(userAuthService.getAuthentication(any())).thenReturn(mockedUser);
@@ -92,8 +102,7 @@ class UserServiceTest {
         String userId = "user_1@email.com";
         String pw = "abcd123!@dsaf56";
         String userName = "유저1";
-        UserSignUpRequest userSignUpRequest = new UserSignUpRequest(userId, pw, userName);
-        UserSignUpResponse registeredUser = userService.signUp(userSignUpRequest);
+        UserSignUpResponse registeredUser = 회원가입을_하다(userId, pw, userName);
 
         assertEquals(registeredUser.getUserId(), userId);
         assertEquals(registeredUser.getUserName(), userName);
@@ -101,6 +110,12 @@ class UserServiceTest {
         // password return 없앰으로 인한 제거
         // assertTrue(passwordEncoder.matches(pw, registeredUser.getPassword()));
     }
+
+    private UserSignUpResponse 회원가입을_하다(String userId, String pw, String userName) {
+        UserSignUpRequest userSignUpRequest = new UserSignUpRequest(userId, pw, userName);
+        return userService.signUp(userSignUpRequest);
+    }
+
 
     public Authentication mockAuthentication(String userId, String password, List<String> authoritiesStr) {
         Collection<? extends GrantedAuthority> authorities = authoritiesStr.stream()
