@@ -23,4 +23,10 @@
 3. 예외 케이스 AMAP
 4. JWT 적용
 5. Test Case 작성
-6. API 명세서 
+6. API 명세서
+
+---
+
+# 참고사항
+
+- docker-compose.yml을 통해 test db(h2) 와 dev db(mysql)를 연동하고 있습니다.
