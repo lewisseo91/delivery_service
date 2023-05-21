@@ -1,5 +1,7 @@
 package com.delivery.order.dto;
 
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateTimeDeserializer;
 import lombok.NoArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -8,7 +10,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 public class OrderSearchDateRequest {
 
-    @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss")
+    @JsonDeserialize(using = LocalDateTimeDeserializer.class)
     private LocalDateTime searchDate;
 
     public OrderSearchDateRequest(LocalDateTime searchDate) {

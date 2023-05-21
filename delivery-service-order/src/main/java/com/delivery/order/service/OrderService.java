@@ -48,6 +48,7 @@ public class OrderService {
     public OrderUpdateAddressResponse updateOrderAddress(String requestUserId, OrderUpdateAddressRequest orderUpdateAddressRequest) {
         Order order = findByOrderId(orderUpdateAddressRequest.getOrderId());
 
+        orderValidator.validateExistOrder(order);
         orderValidator.validateUpdateOrderAddress(order.getOrderCreatedAt(), order.getOrderUserId(), requestUserId, order.getOrderStarted());
 
         order.updateOrderAddress(orderUpdateAddressRequest.getUpdateOrderAddress());

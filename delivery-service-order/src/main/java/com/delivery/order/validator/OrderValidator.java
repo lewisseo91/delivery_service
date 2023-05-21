@@ -1,5 +1,6 @@
 package com.delivery.order.validator;
 
+import com.delivery.order.domain.Order;
 import com.delivery.order.dto.OrderSearchResponse;
 import com.delivery.order.util.DateUtil;
 import lombok.RequiredArgsConstructor;
@@ -8,6 +9,7 @@ import org.springframework.util.CollectionUtils;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Objects;
 
 @Component
 @RequiredArgsConstructor
@@ -42,6 +44,12 @@ public class OrderValidator {
     public void validateNonExistOrder(List<OrderSearchResponse> orders) {
         if (!CollectionUtils.isEmpty(orders)) {
             throw new RuntimeException("주문이 이미 존재 합니다.");
+        }
+    }
+
+    public void validateExistOrder(Order order) {
+        if (Objects.isNull(order)) {
+            throw new RuntimeException("주문이 존재하지 않습니다.");
         }
     }
 }

@@ -1,7 +1,8 @@
 package com.delivery.order.dto;
 
 import com.delivery.order.domain.Order;
-import org.springframework.format.annotation.DateTimeFormat;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateTimeDeserializer;
 
 import java.time.LocalDateTime;
 
@@ -14,7 +15,7 @@ public class OrderAddRequest {
     private String orderMoverId;
     private Boolean orderStarted;
 
-    @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss")
+    @JsonDeserialize(using = LocalDateTimeDeserializer.class)
     private LocalDateTime orderCreatedAt;
 
     public OrderAddRequest() {

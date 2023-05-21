@@ -1,9 +1,6 @@
 package com.delivery.order.controller;
 
-import com.delivery.order.dto.OrderAddRequest;
-import com.delivery.order.dto.OrderAddResponse;
-import com.delivery.order.dto.OrderSearchDateRequest;
-import com.delivery.order.dto.OrderSearchResponse;
+import com.delivery.order.dto.*;
 import com.delivery.order.service.OrderService;
 import com.delivery.user.domain.AuthorityRole;
 import com.delivery.user.service.UserService;
@@ -34,7 +31,7 @@ public class OrderController {
 
     @GetMapping("/search-order-id/{orderId}")
     @Secured(AuthorityRole.RoleName.USER)
-    public ResponseEntity<List<OrderSearchResponse>> findAllByOrderId(@AuthenticationPrincipal User user, @RequestParam String orderId) {
+    public ResponseEntity<List<OrderSearchResponse>> findAllByOrderId(@AuthenticationPrincipal User user, @PathVariable String orderId) {
 
         return ResponseEntity.ok(orderService.findAllByOrderId(orderId));
     }
@@ -44,6 +41,13 @@ public class OrderController {
     public ResponseEntity<List<OrderSearchResponse>> findAllByOrderId(@AuthenticationPrincipal User user, @RequestBody OrderSearchDateRequest orderSearchDateRequest) {
 
         return ResponseEntity.ok(orderService.findAllByOrderCreatedAtAfter(orderSearchDateRequest));
+    }
+
+    @PutMapping("/update-address")
+    @Secured(AuthorityRole.RoleName.USER)
+    public ResponseEntity<OrderUpdateAddressResponse> updateOrderAddress(@AuthenticationPrincipal User user, @RequestBody OrderUpdateAddressRequest orderUpdateAddressRequest) {
+
+        return ResponseEntity.ok(orderService.updateOrderAddress(user.getUsername(), orderUpdateAddressRequest));
     }
 
     @GetMapping("/test")
