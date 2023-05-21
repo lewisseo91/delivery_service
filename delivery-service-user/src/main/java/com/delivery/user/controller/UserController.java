@@ -1,10 +1,7 @@
 package com.delivery.user.controller;
 
 import com.delivery.user.domain.AuthorityRole;
-import com.delivery.user.dto.UserLoginRequest;
-import com.delivery.user.dto.UserLoginResponse;
-import com.delivery.user.dto.UserSignUpRequest;
-import com.delivery.user.dto.UserSignUpResponse;
+import com.delivery.user.dto.*;
 import com.delivery.user.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -34,5 +31,11 @@ public class UserController {
     public ResponseEntity<String> authTest(@AuthenticationPrincipal User user) {
         System.out.println(user.getUsername() + " " + user.getAuthorities());
         return ResponseEntity.ok(userService.findUserByUserId(user.getUsername()).toString());
+    }
+
+    @GetMapping("/user/{userId}")
+    @Secured(AuthorityRole.RoleName.USER)
+    public ResponseEntity<UserInfoDto> getUserInfoByUserId(@RequestParam String userId) {
+        return ResponseEntity.ok(userService.findUserByUserId(userId));
     }
 }
