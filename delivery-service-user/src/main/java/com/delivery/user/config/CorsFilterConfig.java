@@ -21,7 +21,7 @@ public class CorsFilterConfig {
         config.setAllowedHeaders(List.of("*"));
         config.setAllowCredentials(true);
 
-        source.registerCorsConfiguration("/api/**", config);
+        source.registerCorsConfiguration("/user/**", config);
         return new CorsFilter(source);
     }
 

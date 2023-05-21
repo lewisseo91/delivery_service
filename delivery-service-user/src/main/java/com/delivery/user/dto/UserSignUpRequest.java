@@ -15,25 +15,25 @@ public class UserSignUpRequest {
 
     private String password;
 
-    private String nickname;
+    private String userName;
 
     private List<String> authorityNames;
 
     public UserSignUpRequest() {
     }
 
-    public UserSignUpRequest(String userId, String password, String nickname) {
+    public UserSignUpRequest(String userId, String password, String userName) {
         this.userId = userId;
         this.password = password;
-        this.nickname = nickname;
+        this.userName = userName;
         this.authorityNames = new ArrayList<>();
     }
 
-    public UserSignUpRequest(Long id, String userId, String password, String nickname, List<String> authorityNames) {
+    public UserSignUpRequest(Long id, String userId, String password, String userName, List<String> authorityNames) {
         this.id = id;
         this.userId = userId;
         this.password = password;
-        this.nickname = nickname;
+        this.userName = userName;
         this.authorityNames = authorityNames;
     }
 
@@ -49,8 +49,8 @@ public class UserSignUpRequest {
         return password;
     }
 
-    public String getNickname() {
-        return nickname;
+    public String getUserName() {
+        return userName;
     }
 
     public Set<AuthorityRole> convertFromRoleNameToAuthorityRole() {
