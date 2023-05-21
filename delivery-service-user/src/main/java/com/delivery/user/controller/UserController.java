@@ -32,10 +32,4 @@ public class UserController {
         System.out.println(user.getUsername() + " " + user.getAuthorities());
         return ResponseEntity.ok(userService.findUserByUserId(user.getUsername()).toString());
     }
-
-    @GetMapping("/user/{userId}")
-    @Secured(AuthorityRole.RoleName.USER)
-    public ResponseEntity<UserInfoDto> getUserInfoByUserId(@RequestParam String userId) {
-        return ResponseEntity.ok(userService.findUserByUserId(userId));
-    }
 }
