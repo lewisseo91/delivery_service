@@ -14,6 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.HashSet;
 import java.util.List;
+import java.util.Optional;
 
 @Component
 @RequiredArgsConstructor
@@ -69,7 +70,10 @@ public class UserService {
 
     @Transactional(readOnly = true)
     public UserInfoDto findUserByUserId(String userId) {
-        return UserInfoDto.of(userRepository.findOneByUserId(userId));
+        User user = userRepository.findOneByUserId(userId);
+        return Optional.ofNullable(user)
+                .map(UserInfoDto::of)
+                .orElse(null);
     }
 
     private User addUser(User user) {
