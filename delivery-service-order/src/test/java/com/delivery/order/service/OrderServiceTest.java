@@ -1,6 +1,6 @@
 package com.delivery.order.service;
 
-import com.delivery.order.domain.Order;
+import com.delivery.order.dto.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -28,13 +28,13 @@ class OrderServiceTest {
     private Boolean orderStarted;
     private LocalDateTime orderCreatedAt;
 
-    private Order order;
+    private OrderAddRequest order;
 
-    private Order order4DayBefore;
+    private OrderAddRequest order4DayBefore;
 
-    private Order orderStartedTrue;
+    private OrderAddRequest orderStartedTrue;
 
-    private Order orderOwnerDiff;
+    private OrderAddRequest orderOwnerDiff;
 
     @BeforeEach
     public void setup() {
@@ -48,7 +48,7 @@ class OrderServiceTest {
         orderStarted = false;
         orderCreatedAt = LocalDateTime.now();
 
-        order = new Order(
+        order = new OrderAddRequest(
                 orderSeq,
                 orderId,
                 orderUserId,
@@ -60,7 +60,7 @@ class OrderServiceTest {
 
         LocalDateTime nowDayBefore4 = LocalDateTime.now().minusDays(4);
         LocalDateTime startOfDayBefore4 = nowDayBefore4.toLocalDate().atStartOfDay();
-        order4DayBefore = new Order(
+        order4DayBefore = new OrderAddRequest(
                 orderSeq,
                 orderId,
                 orderUserId,
@@ -70,7 +70,7 @@ class OrderServiceTest {
                 orderStarted,
                 startOfDayBefore4);
 
-        orderStartedTrue = new Order(
+        orderStartedTrue = new OrderAddRequest(
                 orderSeq,
                 orderId,
                 orderUserId,
@@ -80,7 +80,7 @@ class OrderServiceTest {
                 true,
                 orderCreatedAt);
 
-        orderOwnerDiff = new Order(
+        orderOwnerDiff = new OrderAddRequest(
                 orderSeq,
                 orderId,
                 orderUserId,
@@ -96,7 +96,7 @@ class OrderServiceTest {
     public void orderTest() {
 
         // when
-        Order savedOrder = 배달을_등록하다(order);
+        OrderAddResponse savedOrder = 배달을_등록하다(order);
 
         // then
         assertEquals(savedOrder.getOrderAddress(), orderAddress);
@@ -110,7 +110,7 @@ class OrderServiceTest {
         배달을_등록하다(order);
 
         // when
-        List<Order> orders = orderService.findAllByOrderId(orderId);
+        List<OrderSearchResponse> orders = orderService.findAllByOrderId(orderId);
 
         // then
         assertEquals(orders.size(), 1);
@@ -126,7 +126,7 @@ class OrderServiceTest {
         LocalDateTime startOfDayBefore3 = nowDayBefore3.toLocalDate().atStartOfDay();
 
         // when
-        List<Order> orders = orderService.findAllByOrderCreatedAtAfter(startOfDayBefore3);
+        List<OrderSearchResponse> orders = orderService.findAllByOrderCreatedAtAfter(new OrderSearchDateRequest(startOfDayBefore3));
 
         // then
         assertEquals(orders.size(), 1);
@@ -143,7 +143,7 @@ class OrderServiceTest {
 
         // when & then
         assertThrows(RuntimeException.class,
-                () -> orderService.findAllByOrderCreatedAtAfter(startOfDayBefore4));
+                () -> orderService.findAllByOrderCreatedAtAfter(new OrderSearchDateRequest(startOfDayBefore4)));
     }
 
     @DisplayName("배달 주문 주소지를 수정할 수 있다.")
@@ -152,9 +152,10 @@ class OrderServiceTest {
         // given
         배달을_등록하다(order);
         String updatedOrderAddress = "updatedOrderAddress";
+        OrderUpdateAddressRequest orderUpdateAddressRequest = new OrderUpdateAddressRequest(orderId, updatedOrderAddress);
 
         // when
-        Order updatedOrder = orderService.updateOrderAddress(orderId, orderUserId, updatedOrderAddress);
+        OrderUpdateAddressResponse updatedOrder = orderService.updateOrderAddress(orderUserId, orderUpdateAddressRequest);
 
         // then
         assertEquals(updatedOrder.getOrderAddress(), updatedOrderAddress);
@@ -166,10 +167,11 @@ class OrderServiceTest {
         // given
         배달을_등록하다(order4DayBefore);
         String updatedOrderAddress = "updatedOrderAddress";
+        OrderUpdateAddressRequest orderUpdateAddressRequest = new OrderUpdateAddressRequest(orderId, updatedOrderAddress);
 
         // when & then
         assertThrows(RuntimeException.class,
-                () -> orderService.updateOrderAddress(orderId, orderUserId, updatedOrderAddress));
+                () -> orderService.updateOrderAddress(orderUserId, orderUpdateAddressRequest));
     }
 
     @DisplayName("배달 주문 주소지를 '배달 시작됨' 전 경우에만 수정할 수 있다.")
@@ -177,10 +179,12 @@ class OrderServiceTest {
     public void updateOrderAddressBeforeStartTest() {
         // given
         배달을_등록하다(order);
+
         String updatedOrderAddress = "updatedOrderAddress";
+        OrderUpdateAddressRequest orderUpdateAddressRequest = new OrderUpdateAddressRequest(orderId, updatedOrderAddress);
 
         // when
-        Order updatedOrder = orderService.updateOrderAddress(orderId, orderUserId, updatedOrderAddress);
+        OrderUpdateAddressResponse updatedOrder = orderService.updateOrderAddress(orderUserId, orderUpdateAddressRequest);
 
         assertFalse(updatedOrder.getOrderStarted());
     }
@@ -191,15 +195,16 @@ class OrderServiceTest {
         // given
         배달을_등록하다(order);
         String updatedOrderAddress = "updatedOrderAddress";
+        OrderUpdateAddressRequest orderUpdateAddressRequest = new OrderUpdateAddressRequest(orderId, updatedOrderAddress);
 
         // when
 
         // when & then
         assertThrows(RuntimeException.class,
-                () -> orderService.updateOrderAddress(orderId, diffOrderUserId, updatedOrderAddress));
+                () -> orderService.updateOrderAddress(diffOrderUserId, orderUpdateAddressRequest));
     }
 
-    private Order 배달을_등록하다(Order order) {
-        return orderService.addOrder(order);
+    private OrderAddResponse 배달을_등록하다(OrderAddRequest orderAddRequest) {
+        return orderService.addOrder(orderAddRequest);
     }
 }

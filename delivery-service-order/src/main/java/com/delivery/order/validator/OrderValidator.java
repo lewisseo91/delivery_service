@@ -1,10 +1,13 @@
 package com.delivery.order.validator;
 
+import com.delivery.order.dto.OrderSearchResponse;
 import com.delivery.order.util.DateUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
+import org.springframework.util.CollectionUtils;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Component
 @RequiredArgsConstructor
@@ -33,6 +36,12 @@ public class OrderValidator {
     private void validateOrderStarted(Boolean orderStarted) {
         if (Boolean.TRUE.equals(orderStarted)) {
             throw new RuntimeException("배달이 이미 시작되었습니다.");
+        }
+    }
+
+    public void validateNonExistOrder(List<OrderSearchResponse> orders) {
+        if (!CollectionUtils.isEmpty(orders)) {
+            throw new RuntimeException("주문이 이미 존재 합니다.");
         }
     }
 }

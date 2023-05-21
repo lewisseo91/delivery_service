@@ -1,42 +1,23 @@
-package com.delivery.order.domain;
+package com.delivery.order.dto;
 
-import jakarta.persistence.*;
+import com.delivery.order.domain.Order;
 import lombok.Builder;
 
 import java.time.LocalDateTime;
 
-@Entity
-@Builder
-public class Order {
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+public class OrderSearchResponse {
+
     private Long id;
-
-    @Column(name = "order_id")
     private String orderId;
-
-    @Column(name = "order_user_id")
     private String orderUserId;
-
-    @Column(name = "order_address")
     private String orderAddress;
-
-    @Column(name = "order_store_id")
     private String orderStoreId;
-
-    @Column(name = "order_mover_id")
     private String orderMoverId;
-
-    @Column(name = "order_started")
     private Boolean orderStarted;
-
-    @Column(name = "order_created_at")
     private LocalDateTime orderCreatedAt;
 
-    public Order() {
-    }
-
-    public Order(Long id, String orderId, String orderUserId, String orderAddress, String orderStoreId, String orderMoverId, Boolean orderStarted, LocalDateTime orderCreatedAt) {
+    @Builder
+    public OrderSearchResponse(Long id, String orderId, String orderUserId, String orderAddress, String orderStoreId, String orderMoverId, Boolean orderStarted, LocalDateTime orderCreatedAt) {
         this.id = id;
         this.orderId = orderId;
         this.orderUserId = orderUserId;
@@ -45,6 +26,19 @@ public class Order {
         this.orderMoverId = orderMoverId;
         this.orderStarted = orderStarted;
         this.orderCreatedAt = orderCreatedAt;
+    }
+
+    public static OrderSearchResponse of(Order order) {
+        return OrderSearchResponse.builder()
+                .id(order.getId())
+                .orderId(order.getOrderId())
+                .orderUserId(order.getOrderUserId())
+                .orderAddress(order.getOrderAddress())
+                .orderStoreId(order.getOrderStoreId())
+                .orderMoverId(order.getOrderMoverId())
+                .orderStarted(order.getOrderStarted())
+                .orderCreatedAt(order.getOrderCreatedAt())
+                .build();
     }
 
     public Long getId() {
@@ -77,9 +71,5 @@ public class Order {
 
     public LocalDateTime getOrderCreatedAt() {
         return orderCreatedAt;
-    }
-
-    public void updateOrderAddress(String orderAddress) {
-        this.orderAddress = orderAddress;
     }
 }

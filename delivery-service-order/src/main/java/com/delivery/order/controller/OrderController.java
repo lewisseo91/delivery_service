@@ -1,5 +1,10 @@
 package com.delivery.order.controller;
 
+import com.delivery.order.dto.OrderAddRequest;
+import com.delivery.order.dto.OrderAddResponse;
+import com.delivery.order.dto.OrderSearchDateRequest;
+import com.delivery.order.dto.OrderSearchResponse;
+import com.delivery.order.service.OrderService;
 import com.delivery.user.domain.AuthorityRole;
 import com.delivery.user.service.UserService;
 import lombok.RequiredArgsConstructor;
@@ -7,9 +12,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.User;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/order")
@@ -17,6 +22,29 @@ import org.springframework.web.bind.annotation.RestController;
 public class OrderController {
 
     private final UserService userService;
+
+    private final OrderService orderService;
+
+    @PostMapping("/add")
+    @Secured(AuthorityRole.RoleName.USER)
+    public ResponseEntity<OrderAddResponse> addOrder(@AuthenticationPrincipal User user, @RequestBody OrderAddRequest orderAddRequest) {
+
+        return ResponseEntity.ok(orderService.addOrder(orderAddRequest));
+    }
+
+    @GetMapping("/search-order-id/{orderId}")
+    @Secured(AuthorityRole.RoleName.USER)
+    public ResponseEntity<List<OrderSearchResponse>> findAllByOrderId(@AuthenticationPrincipal User user, @RequestParam String orderId) {
+
+        return ResponseEntity.ok(orderService.findAllByOrderId(orderId));
+    }
+
+    @PostMapping("/search-date")
+    @Secured(AuthorityRole.RoleName.USER)
+    public ResponseEntity<List<OrderSearchResponse>> findAllByOrderId(@AuthenticationPrincipal User user, @RequestBody OrderSearchDateRequest orderSearchDateRequest) {
+
+        return ResponseEntity.ok(orderService.findAllByOrderCreatedAtAfter(orderSearchDateRequest));
+    }
 
     @GetMapping("/test")
     @Secured(AuthorityRole.RoleName.USER)

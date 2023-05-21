@@ -5,6 +5,9 @@ spring:
     password: password
     driverClassName: org.h2.Driver
   jpa:
+    generate-ddl: true
+    hibernate:
+      ddl-auto: create
     show-sql: true
     database-platform: org.hibernate.dialect.H2Dialect
     defer-datasource-initialization: true
