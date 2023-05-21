@@ -3,6 +3,7 @@ package com.delivery.user.domain;
 import jakarta.persistence.*;
 import lombok.NoArgsConstructor;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 @Entity
 @NoArgsConstructor
@@ -39,6 +40,10 @@ public class User {
         this.authorities = authorities;
     }
 
+    public Long getId() {
+        return id;
+    }
+
     public String getUserId() {
         return userId;
     }
@@ -53,5 +58,11 @@ public class User {
 
     public Set<Authority> getAuthorities() {
         return authorities;
+    }
+
+    public Set<AuthorityRole> getAuthorityNames() {
+        return authorities.stream()
+                .map(Authority::getAuthorityRole)
+                .collect(Collectors.toSet());
     }
 }

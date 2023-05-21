@@ -5,6 +5,7 @@ import com.delivery.user.domain.User;
 import com.delivery.user.dto.UserLoginRequest;
 import com.delivery.user.dto.UserLoginResponse;
 import com.delivery.user.dto.UserSignUpRequest;
+import com.delivery.user.dto.UserSignUpResponse;
 import com.delivery.user.repository.UserRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -92,11 +93,13 @@ class UserServiceTest {
         String pw = "abcd123!@dsaf56";
         String userName = "유저1";
         UserSignUpRequest userSignUpRequest = new UserSignUpRequest(userId, pw, userName);
-        User registeredUser = userService.signUp(userSignUpRequest);
+        UserSignUpResponse registeredUser = userService.signUp(userSignUpRequest);
 
         assertEquals(registeredUser.getUserId(), userId);
         assertEquals(registeredUser.getUserName(), userName);
-        assertTrue(passwordEncoder.matches(pw, registeredUser.getPassword()));
+
+        // password return 없앰으로 인한 제거
+        // assertTrue(passwordEncoder.matches(pw, registeredUser.getPassword()));
     }
 
     public Authentication mockAuthentication(String userId, String password, List<String> authoritiesStr) {
