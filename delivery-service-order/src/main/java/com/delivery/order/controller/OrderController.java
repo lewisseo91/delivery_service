@@ -38,7 +38,7 @@ public class OrderController {
 
     @PostMapping("/search-date")
     @Secured(AuthorityRole.RoleName.USER)
-    public ResponseEntity<List<OrderSearchResponse>> findAllByOrderId(@AuthenticationPrincipal User user, @RequestBody OrderSearchDateRequest orderSearchDateRequest) {
+    public ResponseEntity<List<OrderSearchResponse>> findAllByDate(@AuthenticationPrincipal User user, @RequestBody OrderSearchDateRequest orderSearchDateRequest) {
 
         return ResponseEntity.ok(orderService.findAllByOrderCreatedAtAfter(orderSearchDateRequest));
     }
