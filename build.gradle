@@ -60,6 +60,7 @@ project(':delivery-service-user') {
 
 project(':delivery-service-order') {
 	dependencies {
+		implementation project(':delivery-service-user')
 	}
 }
 

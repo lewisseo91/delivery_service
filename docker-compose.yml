@@ -1,0 +1,14 @@
+version: '3.7'
+
+services:
+  test-h2-db:
+    image: oscarfonts/h2:latest
+    container_name: h2-test
+    restart: always
+    ports:
+      - "1521:1521"
+      - "10081:10081"
+    environment:
+      H2_OPTIONS: -ifNotExists
+    volumes:
+      - ./data/db:/data/db

@@ -3,10 +3,7 @@ package com.delivery.user.service;
 import com.delivery.user.config.jwt.JwtTokenProvider;
 import com.delivery.user.domain.Authority;
 import com.delivery.user.domain.User;
-import com.delivery.user.dto.UserLoginRequest;
-import com.delivery.user.dto.UserLoginResponse;
-import com.delivery.user.dto.UserSignUpRequest;
-import com.delivery.user.dto.UserSignUpResponse;
+import com.delivery.user.dto.*;
 import com.delivery.user.repository.UserRepository;
 import com.delivery.user.validator.UserAuthorizationValidator;
 import lombok.RequiredArgsConstructor;
@@ -17,6 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.HashSet;
 import java.util.List;
+import java.util.Optional;
 
 @Component
 @RequiredArgsConstructor
@@ -35,7 +33,7 @@ public class UserService {
 
     @Transactional
     public UserSignUpResponse signUp(UserSignUpRequest userSignUpRequest) {
-        User checkUser = findUserByUserId(userSignUpRequest.getUserId());
+        UserInfoDto checkUser = findUserByUserId(userSignUpRequest.getUserId());
 
         userAuthorizationValidator.validatePassword(userSignUpRequest);
         userAuthorizationValidator.validateNonExistUser(checkUser);
@@ -56,7 +54,7 @@ public class UserService {
 
     @Transactional(readOnly = true)
     public UserLoginResponse login(UserLoginRequest userLoginRequest) {
-        User user = findUserByUserId(userLoginRequest.getUserId());
+        UserInfoDto user = findUserByUserId(userLoginRequest.getUserId());
 
         userAuthorizationValidator.validateLogin(user, userLoginRequest.getPassword());
 
@@ -71,8 +69,11 @@ public class UserService {
     }
 
     @Transactional(readOnly = true)
-    public User findUserByUserId(String userId) {
-        return userRepository.findOneByUserId(userId);
+    public UserInfoDto findUserByUserId(String userId) {
+        User user = userRepository.findOneByUserId(userId);
+        return Optional.ofNullable(user)
+                .map(UserInfoDto::of)
+                .orElse(null);
     }
 
     private User addUser(User user) {

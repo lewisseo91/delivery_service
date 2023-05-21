@@ -1,6 +1,6 @@
 package com.delivery.user.validator;
 
-import com.delivery.user.domain.User;
+import com.delivery.user.dto.UserInfoDto;
 import com.delivery.user.dto.UserSignUpRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -62,13 +62,13 @@ public class UserAuthorizationValidator {
 
     }
 
-    public void validateNonExistUser(User user) {
+    public void validateNonExistUser(UserInfoDto user) {
         if (Objects.nonNull(user)) {
             throw new RuntimeException("이미 가입되어 있는 유저입니다.");
         }
     }
 
-    public void validateLogin(User user, String requestedPassword) {
+    public void validateLogin(UserInfoDto user, String requestedPassword) {
         if (Objects.isNull(user)) {
             throw new RuntimeException("이미 가입되어 있지 않은 유저입니다.");
         }
