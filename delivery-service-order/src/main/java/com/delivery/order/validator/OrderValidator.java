@@ -2,6 +2,7 @@ package com.delivery.order.validator;
 
 import com.delivery.order.domain.Order;
 import com.delivery.order.dto.OrderSearchResponse;
+import com.delivery.order.exception.*;
 import com.delivery.order.util.DateUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
@@ -19,7 +20,7 @@ public class OrderValidator {
     public void validateMaximumDate(LocalDateTime orderCreatedAt) {
         LocalDateTime baseDate = DateUtil.startOfDateBefore(LocalDateTime.now(), MAXIMUM_SEARCH_DATE);
         if (DateUtil.isBeforeDateFromBaseDate(baseDate, orderCreatedAt)) {
-            throw new RuntimeException("최대 날짜 조회 기간을 초과하였습니다");
+            throw new MaximumDateExceedException("최대 날짜 조회 기간을 초과하였습니다");
         }
     }
 
@@ -31,25 +32,25 @@ public class OrderValidator {
 
     private void validateOrderUserId(String orderUserId, String requestUserId) {
         if (!orderUserId.equals(requestUserId)) {
-            throw new RuntimeException("다른 주문자가 변경을 시도하였습니다.");
+            throw new UnmatchedUserException("다른 주문자가 변경을 시도하였습니다.");
         }
     }
 
     private void validateOrderStarted(Boolean orderStarted) {
         if (Boolean.TRUE.equals(orderStarted)) {
-            throw new RuntimeException("배달이 이미 시작되었습니다.");
+            throw new OrderAlreadyStartedException("배달이 이미 시작되었습니다.");
         }
     }
 
     public void validateNonExistOrder(List<OrderSearchResponse> orders) {
         if (!CollectionUtils.isEmpty(orders)) {
-            throw new RuntimeException("주문이 이미 존재 합니다.");
+            throw new OrderAlreadyExistException("주문이 이미 존재 합니다.");
         }
     }
 
     public void validateExistOrder(Order order) {
         if (Objects.isNull(order)) {
-            throw new RuntimeException("주문이 존재하지 않습니다.");
+            throw new OrderNotExistException("주문이 존재하지 않습니다.");
         }
     }
 }

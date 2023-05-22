@@ -1,5 +1,6 @@
 package com.delivery.user.domain;
 
+import com.delivery.user.exception.AuthRoleParseException;
 import org.h2.util.StringUtils;
 
 import java.util.Arrays;
@@ -27,13 +28,13 @@ public enum AuthorityRole {
 
     public static AuthorityRole getAuthorityRoleByRoleName(String roleName) {
         if (StringUtils.isNullOrEmpty(roleName)) {
-            throw new RuntimeException("role name is empty");
+            throw new AuthRoleParseException("role name is empty");
         }
 
         return Arrays.stream(AuthorityRole.values())
                 .filter(authorityRole -> authorityRole.roleName.equals(roleName))
                 .findFirst()
-                .orElseThrow(() -> new RuntimeException("role name is wrong"));
+                .orElseThrow(() -> new AuthRoleParseException("role name is wrong"));
     }
 
     public String getRoleName() {

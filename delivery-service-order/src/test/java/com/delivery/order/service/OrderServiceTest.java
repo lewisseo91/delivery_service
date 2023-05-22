@@ -2,6 +2,8 @@ package com.delivery.order.service;
 
 import com.delivery.order.config.TestServiceConfig;
 import com.delivery.order.dto.*;
+import com.delivery.order.exception.MaximumDateExceedException;
+import com.delivery.order.exception.UnmatchedUserException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -145,7 +147,7 @@ class OrderServiceTest {
         LocalDateTime startOfDayBefore4 = nowDayBefore4.toLocalDate().atStartOfDay();
 
         // when & then
-        assertThrows(RuntimeException.class,
+        assertThrows(MaximumDateExceedException.class,
                 () -> orderService.findAllByOrderCreatedAtAfter(new OrderSearchDateRequest(startOfDayBefore4)));
     }
 
@@ -173,7 +175,7 @@ class OrderServiceTest {
         OrderUpdateAddressRequest orderUpdateAddressRequest = new OrderUpdateAddressRequest(orderId, updatedOrderAddress);
 
         // when & then
-        assertThrows(RuntimeException.class,
+        assertThrows(MaximumDateExceedException.class,
                 () -> orderService.updateOrderAddress(orderUserId, orderUpdateAddressRequest));
     }
 
@@ -203,7 +205,7 @@ class OrderServiceTest {
         // when
 
         // when & then
-        assertThrows(RuntimeException.class,
+        assertThrows(UnmatchedUserException.class,
                 () -> orderService.updateOrderAddress(diffOrderUserId, orderUpdateAddressRequest));
     }
 

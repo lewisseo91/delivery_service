@@ -1,5 +1,6 @@
 package com.delivery.user.validator;
 
+import com.delivery.user.exception.PasswordUnmatchedConditionException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,7 +19,7 @@ class UserAuthorizationValidatorTest {
     @Test
     public void validatePasswordPattern1_Test() {
         String password = "sadsaasdfsafdsafdsa";
-        assertThrows(RuntimeException.class,
+        assertThrows(PasswordUnmatchedConditionException.class,
                 () -> userAuthorizationValidator
                         .validatePasswordPattern(password));
     }
@@ -27,7 +28,7 @@ class UserAuthorizationValidatorTest {
     @Test
     public void validatePasswordPattern2_Test() {
         String password = "123543dsaasdfsafdsafdsa";
-        assertThrows(RuntimeException.class,
+        assertThrows(PasswordUnmatchedConditionException.class,
                 () -> userAuthorizationValidator
                         .validatePasswordPattern(password));
     }
