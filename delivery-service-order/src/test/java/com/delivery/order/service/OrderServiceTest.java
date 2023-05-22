@@ -2,12 +2,15 @@ package com.delivery.order.service;
 
 import com.delivery.order.config.TestServiceConfig;
 import com.delivery.order.dto.*;
+import com.delivery.order.exception.MaximumDateExceedException;
+import com.delivery.order.exception.UnmatchedUserException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.context.annotation.Import;
+import org.springframework.test.context.ActiveProfiles;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -17,6 +20,7 @@ import static org.junit.jupiter.api.Assertions.*;
 @DisplayName("배달 서비스 테스트")
 @DataJpaTest
 @Import(TestServiceConfig.class)
+@ActiveProfiles("test")
 class OrderServiceTest {
     @Autowired
     private OrderService orderService;
@@ -145,7 +149,7 @@ class OrderServiceTest {
         LocalDateTime startOfDayBefore4 = nowDayBefore4.toLocalDate().atStartOfDay();
 
         // when & then
-        assertThrows(RuntimeException.class,
+        assertThrows(MaximumDateExceedException.class,
                 () -> orderService.findAllByOrderCreatedAtAfter(new OrderSearchDateRequest(startOfDayBefore4)));
     }
 
@@ -173,7 +177,7 @@ class OrderServiceTest {
         OrderUpdateAddressRequest orderUpdateAddressRequest = new OrderUpdateAddressRequest(orderId, updatedOrderAddress);
 
         // when & then
-        assertThrows(RuntimeException.class,
+        assertThrows(MaximumDateExceedException.class,
                 () -> orderService.updateOrderAddress(orderUserId, orderUpdateAddressRequest));
     }
 
@@ -203,7 +207,7 @@ class OrderServiceTest {
         // when
 
         // when & then
-        assertThrows(RuntimeException.class,
+        assertThrows(UnmatchedUserException.class,
                 () -> orderService.updateOrderAddress(diffOrderUserId, orderUpdateAddressRequest));
     }
 
