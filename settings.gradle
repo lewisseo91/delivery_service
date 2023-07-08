@@ -1,4 +1,5 @@
 rootProject.name = 'delivery-service'
 include 'delivery-service-user'
 include 'delivery-service-order'
+include 'delivery-service-post'
 
