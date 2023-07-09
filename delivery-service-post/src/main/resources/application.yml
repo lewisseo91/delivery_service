@@ -25,3 +25,8 @@ jwt:
 
 server:
   port: 8081
+
+# mybatis config
+mybatis:
+  type-aliases-package: com.delivery.post.dao
+  mapper-locations: /mapper/**/*.xml

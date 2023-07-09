@@ -1,1 +1,3 @@
-## mybatis 연습
+## 주목적
+
+mybatis 연습

@@ -37,6 +37,8 @@ public class WebSecurityConfig {
 
                 .requestMatchers("/user/signup", "/user/login", "/h2-console/**")
                 .permitAll()
+                .requestMatchers("/post/**")
+                .permitAll()
                 .dispatcherTypeMatchers( DispatcherType.ERROR ).permitAll()
 
                 .requestMatchers(toH2Console())

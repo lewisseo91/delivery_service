@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.delivery.post.mapper.PostMapper">
+    <select id="findAll" resultType="PostDao">
+        SELECT "post_id" AS postId,
+        "comment_id" AS commentId,
+        "created_at" AS createdAt,
+        "deleted" AS deleted,
+        "post_store_id" AS postStoreId,
+        "user_id" AS userId  FROM "post";
+    </select>
+</mapper>

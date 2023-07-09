@@ -5,81 +5,43 @@ import lombok.Builder;
 
 import java.time.LocalDateTime;
 
-@Entity
+/**
+ * JPA 의존성
+ * 현재는 테이블 생성 용도로만 쓰고 있음
+ */
 @Builder
+@Entity
 public class Post {
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
+    @Column(name="post_id")
+    private Long postId;
 
-    @Column(name = "order_id")
-    private String orderId;
+    @Column(name="user_id")
+    private Long userId;
 
-    @Column(name = "order_user_id")
-    private String orderUserId;
+    @Column(name="post_store_id")
+    private Long postStoreId;
 
-    @Column(name = "order_address")
-    private String orderAddress;
+    @Column(name="comment_id")
+    private Long commentId;
 
-    @Column(name = "order_store_id")
-    private String orderStoreId;
+    @Column(name="deleted")
+    private Boolean deleted;
 
-    @Column(name = "order_mover_id")
-    private String orderMoverId;
-
-    @Column(name = "order_started")
-    private Boolean orderStarted;
-
-    @Column(name = "order_created_at")
-    private LocalDateTime orderCreatedAt;
+    @Column(name="created_at")
+    private LocalDateTime createdAt;
 
     public Post() {
     }
 
-    public Post(Long id, String orderId, String orderUserId, String orderAddress, String orderStoreId, String orderMoverId, Boolean orderStarted, LocalDateTime orderCreatedAt) {
-        this.id = id;
-        this.orderId = orderId;
-        this.orderUserId = orderUserId;
-        this.orderAddress = orderAddress;
-        this.orderStoreId = orderStoreId;
-        this.orderMoverId = orderMoverId;
-        this.orderStarted = orderStarted;
-        this.orderCreatedAt = orderCreatedAt;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public String getOrderId() {
-        return orderId;
-    }
-
-    public String getOrderUserId() {
-        return orderUserId;
-    }
-
-    public String getOrderAddress() {
-        return orderAddress;
-    }
-
-    public String getOrderStoreId() {
-        return orderStoreId;
-    }
-
-    public String getOrderMoverId() {
-        return orderMoverId;
-    }
-
-    public Boolean getOrderStarted() {
-        return orderStarted;
-    }
-
-    public LocalDateTime getOrderCreatedAt() {
-        return orderCreatedAt;
-    }
-
-    public void updateOrderAddress(String orderAddress) {
-        this.orderAddress = orderAddress;
+    public Post(Long postId, Long userId, Long postStoreId, Long commentId, Boolean deleted, LocalDateTime createdAt) {
+        this.postId = postId;
+        this.userId = userId;
+        this.postStoreId = postStoreId;
+        this.commentId = commentId;
+        this.deleted = deleted;
+        this.createdAt = createdAt;
     }
 }
