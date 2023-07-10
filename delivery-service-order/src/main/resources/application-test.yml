@@ -5,6 +5,8 @@ spring:
     password: password
     driverClassName: org.h2.Driver
   jpa:
+    hibernate:
+      ddl-auto: create
     database-platform: org.hibernate.dialect.H2Dialect
     properties:
       hibernate:
@@ -17,6 +19,3 @@ jwt:
   header: Authorization
   secret: ZGVmYXVsdCBrZXkgZm9yIHRlc3QgbGV3aXMgc2VvIDIwMjMgMDUgMjAgZGZzbGFrZmRzYWxramZkc2Fsa2pmZHNhbGtmanM= # default key for test lewis seo 2023 05 20 dfslakfdsalkjfdsalkjfdsalkfjs
   access-token-validity-in-seconds: 600 # 10 min
-
-server:
-  port: 8082

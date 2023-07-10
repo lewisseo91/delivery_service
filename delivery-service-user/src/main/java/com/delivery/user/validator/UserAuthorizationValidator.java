@@ -2,6 +2,7 @@ package com.delivery.user.validator;
 
 import com.delivery.user.dto.UserInfoDto;
 import com.delivery.user.dto.UserSignUpRequest;
+import com.delivery.user.exception.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
@@ -41,13 +42,13 @@ public class UserAuthorizationValidator {
 
     private void validateExistPassword(UserSignUpRequest userSignUpRequest) {
         if (Objects.isNull(userSignUpRequest.getPassword())) {
-            throw new RuntimeException();
+            throw new PasswordNotExistException("요청한 비밀번호가 존재하지 않습니다.");
         }
     }
 
     public void validatePasswordLength(String password) {
         if (!CHAR_LEN_MORE_12_REGEX.matcher(password).matches()) {
-            throw new RuntimeException();
+            throw new PasswordMinLengthException("비밀번호의 길이를 확인 해 주세요.");
         }
     }
 
@@ -57,24 +58,24 @@ public class UserAuthorizationValidator {
                 .count();
 
         if (matchedPatternCounts < MIN_CONDITION_COUNTS) {
-            throw new RuntimeException();
+            throw new PasswordUnmatchedConditionException("비밀번호에 필요한 조건이 충족되지 않았습니다.");
         }
 
     }
 
     public void validateNonExistUser(UserInfoDto user) {
         if (Objects.nonNull(user)) {
-            throw new RuntimeException("이미 가입되어 있는 유저입니다.");
+            throw new UserNotExistException("이미 가입되어 있는 유저입니다.");
         }
     }
 
     public void validateLogin(UserInfoDto user, String requestedPassword) {
         if (Objects.isNull(user)) {
-            throw new RuntimeException("이미 가입되어 있지 않은 유저입니다.");
+            throw new UserNotSignedUpException("가입되어 있지 않은 유저입니다.");
         }
 
         if (!passwordEncoder.matches(requestedPassword, user.getPassword())) {
-            throw new RuntimeException("비밀번호가 일치하지 않습니다.");
+            throw new PasswordNotMatchedException("비밀번호가 일치하지 않습니다.");
         }
     }
 }
