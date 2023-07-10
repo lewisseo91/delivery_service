@@ -28,7 +28,6 @@
 ---
 
 # 참고사항
-
 - docker-compose.yml을 통해 test db(h2) 와 dev db(mysql)를 연동하고 있습니다.
 
 
