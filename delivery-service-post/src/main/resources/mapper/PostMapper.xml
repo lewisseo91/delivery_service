@@ -11,4 +11,24 @@
         "post_store_id" AS postStoreId,
         "user_id" AS userId  FROM "post";
     </select>
+    <insert id="addPost" parameterType="com.delivery.post.domain.Post">
+        INSERT INTO "post"
+        (
+        "post_id",
+        "comment_id",
+        "created_at",
+        "deleted",
+        "post_store_id",
+        "user_id"
+        )
+        VALUES
+        (
+        #{postId},
+        #{commentId},
+        #{createdAt},
+        #{deleted},
+        #{postStoreId},
+        #{userId}
+        )
+    </insert>
 </mapper>

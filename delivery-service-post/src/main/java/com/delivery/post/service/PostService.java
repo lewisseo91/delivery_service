@@ -1,6 +1,7 @@
 package com.delivery.post.service;
 
 import com.delivery.post.dao.PostDao;
+import com.delivery.post.dto.PostRequest;
 import com.delivery.post.mapper.PostMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -15,7 +16,11 @@ public class PostService {
 
     @Transactional(readOnly = true)
     public List<PostDao> findAllPosts() {
-        List<PostDao> resultData = postMapper.findAll();
-        return resultData;
+        return postMapper.findAll();
+    }
+
+    @Transactional
+    public void addPost(PostRequest postRequest) {
+        postMapper.addPost(postRequest.to());
     }
 }
